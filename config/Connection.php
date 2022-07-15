@@ -58,8 +58,9 @@ class Connection
         $data = $stmt->fetchAll(PDO::FETCH_OBJ);
       else $data = $stmt->fetch(PDO::FETCH_OBJ);
       return $data;
-    } catch (\Exception $th) {
-      echo $th->getMessage();
+    } catch (\PDOException $th) {
+      // echo $th->getMessage();
+      return false;
     }
   }
 

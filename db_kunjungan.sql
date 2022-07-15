@@ -79,10 +79,10 @@ INSERT INTO `users` (`id`, `username`, `full_name`, `password`, `access`, `statu
 CREATE TABLE `visit` (
   `id` int(11) NOT NULL COMMENT 'number of data',
   `users_id` int(10) NOT NULL,
-  `name_employee` mediumtext NOT NULL COMMENT 'nama pegawai ',
+  `name_employee` text NOT NULL COMMENT 'nama pegawai ',
   `date_visit` datetime NOT NULL COMMENT 'tanggal kunjungan',
   `destination` text NOT NULL COMMENT 'tujuan',
-  `totals_follow_employee` text DEFAULT '0' COMMENT 'total pengawai yang dibawa',
+  `totals_follow_employee` int DEFAULT 0 COMMENT 'total pengawai yang dibawa',
   `necessity` text NOT NULL COMMENT 'keperluan kunjungan'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='data kunjungan karyawan';
 

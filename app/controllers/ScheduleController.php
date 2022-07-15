@@ -12,8 +12,8 @@ class ScheduleController extends Controller
     $table = $model->data(null, ['visit', 'facility']);
     if (!empty($table)) {
       $data['table'] = json_decode(json_encode($table));
-      $data['visited']  = json_decode(json_encode($model->getVisited(null)));
     }
+    $data['visited']  = json_decode(json_encode($model->getVisited(null)));
     $this->view('data_schedule', $data);
   }
 

@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 
 use Config\Connection;
 
@@ -17,6 +18,8 @@ class Schedule
   {
     if (!is_null($table)) {
       $visited = $this->class->getData($this->table, $id ?? null, $join, null, 'counted');
+      // var_dump($visited);
+      // die();
       if (!is_object($visited)) {
         foreach ($visited as $key => $value) {
           $facility[] = $this->class->getData('facility', $value->visit_id, null, [0, 'visit_id']);
@@ -24,6 +27,9 @@ class Schedule
       } else {
         $facility = $this->class->getData('facility', $visited->visit_id, null, [0, 'visit_id']);
       }
+      // echo '<pre>';
+      // print_r($facility);
+      // die();
       if (is_object($facility)) $facility = [$facility];
       $data = [$visited,  $facility];
     } else
@@ -40,6 +46,11 @@ class Schedule
   {
     $data = [];
     $schedule = $this->class->getData($this->table, null);
+    if (empty($schedule)) {
+      $visitId = $this->class->getData('visit', null);
+      if (is_object($visitId)) $visitId = [$visitId];
+      return $visitId;
+    }
     if (is_object($schedule)) $schedule = [$schedule];
     else $schedule = $schedule;
     // $visited = [];
