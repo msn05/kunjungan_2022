@@ -19,8 +19,9 @@
 ##
 
 ======= Users ========
-- admin : admin123 -> password123
-- staf  : staf123  -> staf123
+- admin : admin@account.com -> password123
+- staf  : staff@account.com  -> staf123
 
 
-
+======= Composer ====== 
+- template adminLTE : composer install
