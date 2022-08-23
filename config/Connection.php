@@ -26,27 +26,33 @@ class Connection
 
   public function getData($table, $id = null, $join = null, $columns = null, $count = null)
   {
+    $data = "";
     if (!is_null($join)) {
       $columnId = "`$table`.id as PrimaryId";
       if (!is_null($count)) $columnId .= ",`$count`.`$count`";
       if (is_array($join)) {
         $params = array_values($join);
         $keys   = array_keys($join);
-        $data = "SELECT *,$columnId FROM `$table` LEFT JOIN  `$params[0]`as a ON a.`id` = `$table`.`" . $params[0] . '_id' . "` ";
+        $data   = "SELECT *,$columnId FROM `$table` LEFT JOIN  `$params[0]`as a ON a.`id` = `$table`.`" . $params[0] . '_id' . "` ";
       } else {
         $data = "SELECT *,$columnId FROM `$table` LEFT JOIN `$join` as a ON a.id = `$table`.`" . $join . '_id' . "`";
       }
       if (!is_null($count)) $data .= " LEFT JOIN (SELECT *, COUNT(id) as `$count` FROM `$params[1]` GROUP BY `" . $params[0] . '_id' . "`) `$count`  ON `$count`.`" . $params[0] . '_id' . "` = a.`id` ";
-    } else $data = "SELECT * FROM `$table`";
-
+    } else {
+      $data = "SELECT * FROM `$table`";
+    }
     if (!is_null($id)) {
       if (is_array($id)) {
         $params = array_values($id);
         $keys   = array_keys($id);
         $data .= " WHERE `$keys[0]` = '" . $params[0] . "' AND `$keys[1]`= '" . $params[1] . "' ";
       }
-      if (is_string($id))
-        $data .= " WHERE `$table`.`id` = '" . $id . "' ";
+      if (is_string($id)) {
+        if ($table == 'facility')
+          $data .= " WHERE `$table`.`visit_id` = '" . $id . "' ";
+        else
+          $data .= " WHERE `$table`.`id` = '" . $id . "' ";
+      }
     }
     if (!is_null($columns)) $data .= " OR  `$columns[1]` = '" . $id . "'";
     if (!is_null($join))
